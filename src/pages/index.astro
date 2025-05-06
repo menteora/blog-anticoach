@@ -1,57 +1,30 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/HeroExtended.astro';
-import Content from '~/components/widgets/Content.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import Features3 from '~/components/widgets/Features3.astro';
-import Testimonials from '~/components/widgets/Testimonials.astro';
-import Steps from '~/components/widgets/Steps.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
-  title: 'AI - Assolutamente Inutile',
+  title: 'AntiCoach',
 };
 ---
 
 <Layout metadata={metadata}>
-  <Fragment slot="announcement"></Fragment>
-  <Fragment slot="header">
-    <Header
-      links={[
-        { text: 'Home', href: '#' },
-        { text: 'About', href: '#about' },
-        { text: 'Blog', href: '#blog' },
-      ]}
-      isSticky
-      showToggleTheme
-    />
-  </Fragment>
-  
+
   <!-- Hero Widget ******************* -->
 
-  <Hero
-    image={{ src: '~/assets/images/hero-image.png', alt: 'AstroWind Hero Image' }}
-  >
-    <Fragment slot="title">
-      Il Blog dell’Anti-Coach
-    </Fragment>
+  <Hero image={{ src: '~/assets/images/hero-image.png', alt: 'AstroWind Hero Image' }}>
+    <Fragment slot="title"> Il Blog dell’Anti-Coach </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="hidden sm:inline">... niente da insegnare, tanto da imparare</Fragment>
+      <span class="hidden sm:inline">... niente da insegnare, tanto da imparare</span>
+    </Fragment>
   </Hero>
+    <!-- HighlightedPosts Widget ******* -->
 
-  <!-- HighlightedPosts Widget ******* -->
+    <BlogLatestPosts
+      title="Cerca qualcosa di interessante..."
+      information={`...voglio vedere se proprio ce la fai e se lo trovi per piacere non lo dire a nessuno, ho una reputazione da mantenere`}
+    />
 
-  <BlogLatestPosts
-    title="Find out more content in our Blog"
-    information={`The blog is used to display AstroWind documentation.
-                        Each new article will be an important step that you will need to know to be an expert in creating a website using Astro + Tailwind CSS.
-                        Astro is a very interesting technology. Thanks.
-                `}
-  />
-
-  
 </Layout>
