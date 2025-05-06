@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://anticoach.it/sitemap-index.xml
+Sitemap: https://menteora.github.io/blog-anticoach/sitemap-index.xml
