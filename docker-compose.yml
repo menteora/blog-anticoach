@@ -1,6 +1,17 @@
+version: '3.8'
+
 services:
-  astrowind:
-    build: .
-    container_name: astrowind
+  node:
+    image: node:lts
+    container_name: node-dev
+    # monta la cartella corrente nella home di `node`
+    volumes:
+      - ./:/home/node/app:cached
+    working_dir: /home/node/app
+    # esegui come utente `node` (UID 1000)
+    user: node
     ports:
-      - 8080:8080
+      - '1234:1234'
+    stdin_open: true
+    tty: true
+    command: tail -f /dev/null

@@ -1,0 +1,21 @@
+{
+  "name": "Node LTS Dev",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "node",
+  // adesso il workspace è nella home di `node`
+  "workspaceFolder": "/home/node/app",
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "unifiedjs.vscode-mdx",
+        "astro-build.astro-vscode",
+        "bradlc.vscode-tailwindcss",
+      ]
+    }
+  },
+  "postCreateCommand": "npm install"
+}
