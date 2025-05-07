@@ -1,7 +1,7 @@
 ---
-publishDate: 2023-07-17T00:00:00Z
+publishDate: 2025-05-05T00:00:00Z
 title: titolo
-image: black.png
+image: "../assets/black.png"
 category: Documentation
 tags:
   - tag
