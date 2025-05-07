@@ -1,7 +1,7 @@
 ---
 publishDate: 2023-07-17T00:00:00Z
 title: titolo
-image: 
+image: image.png
 category: Documentation
 tags:
   - tag
