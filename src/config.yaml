@@ -1,5 +1,5 @@
 site:
-  name: AntiCoach
+  name: AntiCoach.it
   site: 'https://menteora.github.io/blog-anticoach/'
   base: '/blog-anticoach/'
   trailingSlash: false
