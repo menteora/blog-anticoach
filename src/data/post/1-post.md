@@ -2,8 +2,7 @@
 ---
 publishDate: 2025-05-05T00:00:00Z
 title: titolo
-image: 
-  - url: "../assets/images/black.png"
+image: "/assets/images/back.png"
 category: Documentation
 tags:
   - tag
