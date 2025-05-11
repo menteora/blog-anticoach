@@ -1,4 +1,3 @@
-
 ---
 publishDate: 2025-05-05T00:00:00Z
 title: titolo
@@ -25,3 +24,4 @@ A volte quella torta la buttiamo nel pattume senza neanche averla fatta assaggia
 Ok, allora, cosa puoi fare oggi per una persona a cui hai riservato un pezzo di torta ma a cui dai molto poco da tempo?
 
 Potrebbe essere una chiamata, un messaggio, un sorriso, un po' di ascolto incondizionato...magari un abbraccio, un semplice ti voglio bene oppure togliere le ragnatele da un ti amo lasciato da tanto solo e al buio sul fondo del proprio cuore.
+
