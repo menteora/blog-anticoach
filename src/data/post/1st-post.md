@@ -1,7 +1,6 @@
 ---
 publishDate: 2025-05-05T00:00:00Z
 title: titolo
-image: "./black.png"
 category: Documentation
 tags:
   - tag
