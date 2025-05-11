@@ -1,6 +1,7 @@
 ---
 publishDate: 2025-05-05T00:00:00Z
 title: titolo
+image: './back.png'
 category: Documentation
 tags:
   - tag
