@@ -29,11 +29,12 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
           configBuilder(rawJsonConfig);
 
         // qui facciamo il base dinamico: '/' in dev, altrimenti quello dal YAML
-        const dynamicBase = command === 'dev' ? '/' : SITE.base;
+        SITE.base = command === 'dev' ? '/' : SITE.base;
+        SITE.site = command === 'dev' ? 'http://localhost:1234/' : SITE.site;
 
         updateConfig({
           site: SITE.site,
-          base: dynamicBase,                       // ← sovrascrive SITE.base in dev :contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}
+          base: SITE.base,                       // ← sovrascrive SITE.base in dev :contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}
           trailingSlash: SITE.trailingSlash ? 'always' : 'never',
           vite: {
             plugins: [
