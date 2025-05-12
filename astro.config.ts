@@ -14,6 +14,8 @@ import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
 
+import cookieconsent from "@jop-software/astro-cookieconsent";
+
 import {
   readingTimeRemarkPlugin,
   responsiveTablesRehypePlugin,
@@ -36,6 +38,24 @@ export default defineConfig({
   output: 'static',
 
   integrations: [
+
+cookieconsent({
+            guiOptions: {
+                consentModal: {
+                    layout: 'cloud',
+                    position: 'bottom center',
+                    equalWeightButtons: true,
+                    flipButtons: false,
+                },
+                preferencesModal: {
+                    layout: "box",
+                    position: "right",
+                    equalWeightButtons: true,
+                    flipButtons: false,
+                },
+            },
+        }),
+
     tailwind({
       applyBaseStyles: false,
     }),
