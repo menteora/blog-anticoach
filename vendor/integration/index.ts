@@ -1,3 +1,4 @@
+// index.ts (vendor/integration)
 import fs from 'node:fs';
 import os from 'node:os';
 import type { AstroConfig, AstroIntegration } from 'astro';
@@ -12,10 +13,8 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
     hooks: {
       'astro:config:setup': async ({
-        // command,
+        command,               // <-- aggiunto per runtime
         config,
-        // injectRoute,
-        // isRestart,
         logger,
         updateConfig,
         addWatchFile,
@@ -26,14 +25,16 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
         const rawJsonConfig = (await loadConfig(_themeConfig)) as Config;
-        const { SITE, I18N, METADATA, APP_BLOG, UI, ANALYTICS } = configBuilder(rawJsonConfig);
+        const { SITE, I18N, METADATA, APP_BLOG, UI, ANALYTICS } =
+          configBuilder(rawJsonConfig);
+
+        // qui facciamo il base dinamico: '/' in dev, altrimenti quello dal YAML
+        const dynamicBase = command === 'dev' ? '/' : SITE.base;
 
         updateConfig({
           site: SITE.site,
-          base: SITE.base,
-
+          base: dynamicBase,                       // ← sovrascrive SITE.base in dev :contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}
           trailingSlash: SITE.trailingSlash ? 'always' : 'never',
-
           vite: {
             plugins: [
               {
@@ -46,12 +47,12 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
                 load(id) {
                   if (id === resolvedVirtualModuleId) {
                     return `
-                    export const SITE = ${JSON.stringify(SITE)};
-                    export const I18N = ${JSON.stringify(I18N)};
-                    export const METADATA = ${JSON.stringify(METADATA)};
-                    export const APP_BLOG = ${JSON.stringify(APP_BLOG)};
-                    export const UI = ${JSON.stringify(UI)};
-                    export const ANALYTICS = ${JSON.stringify(ANALYTICS)};
+export const SITE = ${JSON.stringify(SITE)};
+export const I18N = ${JSON.stringify(I18N)};
+export const METADATA = ${JSON.stringify(METADATA)};
+export const APP_BLOG = ${JSON.stringify(APP_BLOG)};
+export const UI = ${JSON.stringify(UI)};
+export const ANALYTICS = ${JSON.stringify(ANALYTICS)};
                     `;
                   }
                 },
@@ -62,12 +63,12 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
         if (typeof _themeConfig === 'string') {
           addWatchFile(new URL(_themeConfig, config.root));
-
           buildLogger.info(`Astrowind \`${_themeConfig}\` has been loaded.`);
         } else {
           buildLogger.info(`Astrowind config has been loaded.`);
         }
       },
+
       'astro:config:done': async ({ config }) => {
         cfg = config;
       },
@@ -86,28 +87,36 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
           const hasIntegration =
             Array.isArray(cfg?.integrations) &&
-            cfg.integrations?.find((e) => e?.name === '@astrojs/sitemap') !== undefined;
+            cfg.integrations?.find((e) => e?.name === '@astrojs/sitemap') !==
+              undefined;
           const sitemapExists = fs.existsSync(sitemapFile);
 
           if (hasIntegration && sitemapExists) {
-            const robotsTxt = fs.readFileSync(robotsTxtFile, { encoding: 'utf8', flag: 'a+' });
-            const sitemapUrl = new URL(sitemapName, String(new URL(cfg.base, cfg.site)));
+            const robotsTxt = fs.readFileSync(robotsTxtFile, {
+              encoding: 'utf8',
+              flag: 'a+',
+            });
+            const sitemapUrl = new URL(
+              sitemapName,
+              String(new URL(cfg.base, cfg.site))
+            );
             const pattern = /^Sitemap:(.*)$/m;
 
             if (!pattern.test(robotsTxt)) {
-              fs.writeFileSync(robotsTxtFileInOut, `${robotsTxt}${os.EOL}${os.EOL}Sitemap: ${sitemapUrl}`, {
-                encoding: 'utf8',
-                flag: 'w',
-              });
+              fs.writeFileSync(
+                robotsTxtFileInOut,
+                `${robotsTxt}${os.EOL}${os.EOL}Sitemap: ${sitemapUrl}`,
+                { encoding: 'utf8', flag: 'w' }
+              );
             } else {
-              fs.writeFileSync(robotsTxtFileInOut, robotsTxt.replace(pattern, `Sitemap: ${sitemapUrl}`), {
-                encoding: 'utf8',
-                flag: 'w',
-              });
+              fs.writeFileSync(
+                robotsTxtFileInOut,
+                robotsTxt.replace(pattern, `Sitemap: ${sitemapUrl}`),
+                { encoding: 'utf8', flag: 'w' }
+              );
             }
           }
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
+        } catch {
           /* empty */
         }
       },

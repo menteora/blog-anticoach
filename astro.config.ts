@@ -1,3 +1,4 @@
+// astro.config.ts
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -13,13 +14,23 @@ import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
 
-import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
+import {
+  readingTimeRemarkPlugin,
+  responsiveTablesRehypePlugin,
+  lazyImagesRehypePlugin,
+} from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
-const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
-  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
+const whenExternalScripts = (
+  items: (() => AstroIntegration) | (() => AstroIntegration)[]
+) =>
+  hasExternalScripts
+    ? Array.isArray(items)
+      ? items.map((item) => item())
+      : [items()]
+    : [];
 
 export default defineConfig({
   output: 'static',
@@ -79,12 +90,13 @@ export default defineConfig({
     remarkPlugins: [readingTimeRemarkPlugin],
     rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
   },
+
   server:{
     host: "0.0.0.0",
     port: 1234, 
   },  
+
   vite: {
-    server:{ hmr: { clientPort: 1234 }, watch: { usePolling: true }},
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),
