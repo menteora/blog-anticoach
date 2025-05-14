@@ -13,7 +13,7 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
     hooks: {
       'astro:config:setup': async ({
-        command,               // <-- aggiunto per runtime
+        command, // <-- aggiunto per runtime
         config,
         logger,
         updateConfig,
@@ -25,8 +25,7 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
         const rawJsonConfig = (await loadConfig(_themeConfig)) as Config;
-        const { SITE, I18N, METADATA, APP_BLOG, UI, ANALYTICS } =
-          configBuilder(rawJsonConfig);
+        const { SITE, I18N, METADATA, APP_BLOG, UI, ANALYTICS } = configBuilder(rawJsonConfig);
 
         // qui facciamo il base dinamico: '/' in dev, altrimenti quello dal YAML
         SITE.base = command === 'dev' ? '/' : SITE.base;
@@ -34,7 +33,7 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
         updateConfig({
           site: SITE.site,
-          base: SITE.base,                       // ← sovrascrive SITE.base in dev :contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}
+          base: SITE.base, // ← sovrascrive SITE.base in dev :contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}
           trailingSlash: SITE.trailingSlash ? 'always' : 'never',
           vite: {
             plugins: [
@@ -88,8 +87,7 @@ export const ANALYTICS = ${JSON.stringify(ANALYTICS)};
 
           const hasIntegration =
             Array.isArray(cfg?.integrations) &&
-            cfg.integrations?.find((e) => e?.name === '@astrojs/sitemap') !==
-              undefined;
+            cfg.integrations?.find((e) => e?.name === '@astrojs/sitemap') !== undefined;
           const sitemapExists = fs.existsSync(sitemapFile);
 
           if (hasIntegration && sitemapExists) {
@@ -97,24 +95,19 @@ export const ANALYTICS = ${JSON.stringify(ANALYTICS)};
               encoding: 'utf8',
               flag: 'a+',
             });
-            const sitemapUrl = new URL(
-              sitemapName,
-              String(new URL(cfg.base, cfg.site))
-            );
+            const sitemapUrl = new URL(sitemapName, String(new URL(cfg.base, cfg.site)));
             const pattern = /^Sitemap:(.*)$/m;
 
             if (!pattern.test(robotsTxt)) {
-              fs.writeFileSync(
-                robotsTxtFileInOut,
-                `${robotsTxt}${os.EOL}${os.EOL}Sitemap: ${sitemapUrl}`,
-                { encoding: 'utf8', flag: 'w' }
-              );
+              fs.writeFileSync(robotsTxtFileInOut, `${robotsTxt}${os.EOL}${os.EOL}Sitemap: ${sitemapUrl}`, {
+                encoding: 'utf8',
+                flag: 'w',
+              });
             } else {
-              fs.writeFileSync(
-                robotsTxtFileInOut,
-                robotsTxt.replace(pattern, `Sitemap: ${sitemapUrl}`),
-                { encoding: 'utf8', flag: 'w' }
-              );
+              fs.writeFileSync(robotsTxtFileInOut, robotsTxt.replace(pattern, `Sitemap: ${sitemapUrl}`), {
+                encoding: 'utf8',
+                flag: 'w',
+              });
             }
           }
         } catch {

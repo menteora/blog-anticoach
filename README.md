@@ -1,3 +1,8 @@
+EXTRA:
+
+https://daniel.es/blog/the-ultimate-astro-google-analytics-guide/ 
+https://playground.cookieconsent.orestbida.com/
+
 # 🚀 AstroWind test
 
 <img src="https://raw.githubusercontent.com/onwidget/.github/main/resources/astrowind/lighthouse-score.png" align="right"
