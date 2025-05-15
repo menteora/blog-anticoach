@@ -71,7 +71,6 @@ export const adaptOpenGraphImages = async (
           };
         }
 
-        // @ts-ignore
         let _image;  
 
         if (
