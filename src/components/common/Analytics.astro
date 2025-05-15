@@ -10,7 +10,7 @@ import { ANALYTICS } from 'astrowind:config';
 <script is:inline data-category="analytics" data-service="Google Analytics" define:vars={ ANALYTICS.vendors.googleAnalytics.id } {...(ANALYTICS?.vendors?.googleAnalytics?.partytown ? { type: "text/partytown" } : {})}>
   window.dataLayer = window.dataLayer || [];
   function gtag() {
-    window.dataLayer.push(arguments);
+    window.dataLayer.push(arguments)
   }
   gtag("js", new Date());
   gtag("config", id);
